@@ -412,9 +412,9 @@ function warnFor(p){const f=p.fam;let w='Suplemento dietario: no es un medicamen
  if(f==='selah')w='Este producto es un alimento y debe ser comercializado como tal. Si está embarazada o lactando pregunte al médico. Si toma medicamentos consulte a su médico antes de ingerirlo. Conservar en lugar fresco y seco, máx. 30 °C, protegido de la luz.';
  return w}
 // chips
-function chips(){const c=$('#chips');const segs=SEGO.filter(s=>P.some(p=>p.seg===s)&&!s.startsWith('ropa'));const hasR=P.some(p=>String(p.seg).startsWith('ropa'));
- const nOf=P.filter(p=>promoPct(p)&&!isAg(p)).length;c.innerHTML=`<button class="chip ${seg==='all'?'on':''}" data-s="all">Todo</button>`+(nOf?`<button class="chip ${seg==='ofertas'?'on':''}" data-s="ofertas">🔥 Ofertas (${nOf})</button>`:'')+segs.map(s=>`<button class="chip ${seg===s?'on':''}" data-s="${s}">${SEG[s]}</button>`).join('')+(hasR?`<button class="chip ${seg==='vest'?'on':''}" data-s="vest">👕 Vestuario</button>`:'')+(seg==='vest'?`<span class="subchips">${[['all','Todos'],['M','Mujer'],['H','Hombre']].map(g=>`<button class="chip sub ${GEN===g[0]?'on':''}" data-g="${g[0]}">${g[1]}</button>`).join('')}</span>`:'');
- c.onclick=e=>{const b=e.target.closest('.chip');if(!b)return;if(b.dataset.g){GEN=b.dataset.g;chips();render();return}if(b.dataset.s!=='vest')GEN='all';seg=b.dataset.s;for(const k in SLIM)delete SLIM[k];chips();render();window.scrollTo({top:$('#list').offsetTop-150,behavior:'smooth'})}}
+function chips(){const c=$('#chips');const segs=SEGO.filter(s=>P.some(p=>p.seg===s)&&!s.startsWith('ropa')&&s!=='combo');const hasR=P.some(p=>String(p.seg).startsWith('ropa'));const nCb=P.filter(p=>p.seg==='combo').length;
+ const nOf=P.filter(p=>promoPct(p)&&!isAg(p)).length;const ch=(s,t,on,g)=>`<button class="chip ${on?'on':''}" data-s="${s}"${g?` data-gg="${g}"`:''}>${t}</button>`;c.innerHTML=ch('all','Todo',seg==='all')+ch('combo','🎁 Combos'+(nCb?` (${nCb})`:''),seg==='combo')+(nOf?ch('ofertas',`🔥 Ofertas (${nOf})`,seg==='ofertas'):'')+(hasR?ch('vest','👩 Mujer',seg==='vest'&&GEN==='M','M')+ch('vest','👨 Hombre',seg==='vest'&&GEN==='H','H')+ch('vest','👕 Vestuario (todo)',seg==='vest'&&GEN==='all','all'):'')+segs.map(s=>ch(s,SEG[s],seg===s)).join('');
+ c.onclick=e=>{const b=e.target.closest('.chip');if(!b)return;GEN=b.dataset.gg||'all';seg=b.dataset.s;for(const k in SLIM)delete SLIM[k];chips();render();window.scrollTo({top:$('#list').offsetTop-150,behavior:'smooth'})}}
 function brands(){const bs=[...new Set(P.map(p=>p.brand))].sort();$('#fbrand').innerHTML='<option value="">Todas las marcas</option>'+bs.map(b=>`<option>${esc(b)}</option>`).join('')}
 function price(p){return ep(p)}
 function firstBuy(){return user&&!store.get('selah_orders',[]).length}
@@ -433,7 +433,7 @@ function render(){const q=$('#q').value.trim().toLowerCase(),b=$('#fbrand').valu
  const out=feat+SEGO.filter(s=>L.some(p=>p.seg===s)).map(s=>{const ps=L.filter(p=>p.seg===s).sort(sorter).sort((a,b)=>(isAg(a)?1:0)-(isAg(b)?1:0));
   const lim=SLIM[s]||(seg==='all'&&!q&&!b?8:40);const more=ps.length>lim?`<div style="text-align:center;margin:14px 0"><button class="btn ghost" data-more="${s}">${seg==='all'&&!q&&!b?'Ver todos':'Ver más'} (${ps.length-lim} más)</button></div>`:'';
   return `<section class="seg" id="s-${s}"><h3>${SEG[s]}</h3><p class="sd">${SEGD[s]}</p><div class="grid">${ps.slice(0,lim).map(card).join('')}</div>${more}</section>`}).join('');
- $('#list').innerHTML=out||'<p class="empty">No encontramos productos con ese filtro.</p>'}
+ $('#list').innerHTML=out||(seg==='combo'?'<p class="empty">🎁 Muy pronto nuevos combos con descuento. ¡Escríbenos por WhatsApp y te armamos uno a tu medida!</p>':'<p class="empty">No encontramos productos con ese filtro.</p>')}
 // qty & add (delegation)
 document.addEventListener('click',e=>{const t=e.target;
  const m=t.closest('[data-m]'),pl=t.closest('[data-p]'),ad=t.closest('[data-add]'),op=t.closest('[data-open]');const mo=t.closest('[data-more]');if(mo){const s=mo.dataset.more;SLIM[s]=(SLIM[s]||(seg==='all'?8:40))+40;render();return}
