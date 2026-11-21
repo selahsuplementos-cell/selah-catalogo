@@ -244,6 +244,9 @@ footer{border-top:1px solid var(--ln);margin-top:50px;padding:36px 0 110px;color
 }
 
 /* promo + redes */
+.card.ag .ph img{filter:grayscale(.85);opacity:.6}.agtag{position:absolute;left:10px;top:10px;z-index:2;background:#111;color:#fff;font-weight:800;font-size:12px;border-radius:8px;padding:4px 9px;letter-spacing:.04em}
+.tsel{width:100%;margin:0 0 8px;height:38px;border-radius:10px;background:var(--bk);color:var(--tx);border:1px solid var(--ln);padding:0 10px;font-weight:600}
+
 .strip{background:linear-gradient(90deg,#0f3d39,#2cc5b6 50%,#0f3d39);color:#04110f;font-weight:800;font-size:12.5px;text-align:center;padding:7px 12px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;align-items:center}
 .strip button{background:#04110f;color:#2cc5b6;border-radius:999px;padding:3px 10px;font-weight:800;font-size:12px}
 .pm{width:min(460px,100%);text-align:center;padding:0 0 18px;overflow:hidden}
@@ -385,6 +388,7 @@ const FAM={"whey": {"uso": "Proteína de suero de leche para complementar la ing
 const SEG={"prot": "Proteínas", "mass": "Ganadores de masa", "crea": "Creatinas", "amino": "Aminoácidos y recuperación", "pre": "Pre-entrenos y energía", "burn": "Control de peso", "vit": "Vitaminas y bienestar", "snack": "Snacks y bebidas proteicas", "batido": "Batidos funcionales"};
 const SHORT={"whey": "Recuperación y masa muscular magra", "nitrotech": "Fuerza y músculo magro (con creatina)", "nitrogold": "Recuperación rápida y músculo magro", "ripped": "Proteína para definición", "iso": "Proteína aislada: músculo sin grasa ni lactosa", "blend": "Proteína de liberación prolongada", "vegan": "Proteína vegetal sin lactosa", "gmn_nitromass": "Proteína para tonificar y recuperar", "gmn_beglow": "Proteína ligera para cuidar tu figura", "gmn_beone": "Proteína aislada con colágeno", "gainer": "Subir de peso y ganar volumen", "gainer_lean": "Ganar masa con menos grasa", "gmn_supermega": "Máxima ganancia de peso y masa", "gmn_mega": "Ganancia de masa controlada", "creatina": "Más fuerza, potencia y rendimiento", "creatina_caps": "Creatina práctica para fuerza", "creatina_mix": "Fuerza y volumen muscular", "gmn_creatina": "Fuerza y rendimiento diario", "bcaa": "Recuperación y menos fatiga", "eaa": "Aminoácidos esenciales para recuperar", "aminoenergy": "Energía suave + recuperación", "glutamina": "Recuperación y salud intestinal", "colageno": "Articulaciones, piel y cabello", "betaalanina": "Resistencia en alta intensidad", "gmn_amino": "BCAA para entrenar y recuperar", "pre": "Energía, enfoque y bombeo", "energydrink": "Energía al instante, sin azúcar", "gmn_energy": "Recarga de energía", "gmn_supreme": "Pre-entreno con creatina", "burner": "Apoyo para quemar grasa", "carnitina": "Usa la grasa como energía", "multi": "Energía e inmunidad diaria", "omega": "Corazón, cerebro y articulaciones", "magnesio": "Relajación muscular y mejor sueño", "ashwa": "Manejo del estrés y descanso", "vitc": "Defensas y antioxidante", "zinc": "Defensas y función hormonal", "d3k2": "Huesos fuertes y defensas", "bcomplex": "Energía y sistema nervioso", "coq10": "Energía celular y corazón", "chill": "Relajación y descanso", "beauty": "Piel, cabello, uñas y enfoque", "test": "Apoyo hormonal masculino", "metab": "Apoyo al metabolismo", "selah": "Menos estrés, relajación y descanso", "rtd": "Proteína lista para tomar", "snackbar": "Snack proteico sin culpa", "pancake": "Desayuno fit alto en proteína", "pops": "Snack crocante con proteína", "gmn_green": "Nutrientes verdes, bajo en calorías", "gmn_yellow": "Balance y bienestar diario", "gmn_detox": "Fibra para tu digestión", "qk_wp": "Proteína + caseína para recuperación", "qk_bull": "29 g de proteína por porción", "qk_iso": "Proteína aislada 0 grasa 0 lactosa", "qk_shake": "Malteada nutritiva para tus momentos activos", "qk_hydro": "Hidratación y energía para el deporte"};
 const SEGD={prot:'Proteínas de suero, aisladas y mezclas para recuperación y desarrollo de masa muscular magra.',mass:'Hipercalóricos para subir de peso y ganar volumen con proteína y carbohidratos de calidad.',crea:'El suplemento más estudiado para fuerza y potencia. Monohidratada, micronizada y matrices.',amino:'BCAA, EAA, glutamina, colágeno y beta-alanina para recuperación y resistencia.',pre:'Energía, enfoque y bombeo para entrenar con intensidad.',burn:'Termogénicos y L-carnitina para acompañar planes de definición.',vit:'Vitaminas, minerales, omega 3, magnesio y adaptógenos para tu bienestar diario.',snack:'Snacks y bebidas con proteína listos para llevar.',batido:'Batidos funcionales GMN Joy: verde, amarillo y detox.'};
+SEGD.ofertas='Productos con descuento esta semana. ¡Aprovecha antes de que se agoten!';SEG.ofertas='🔥 Ofertas';
 const SEGO=['prot','mass','crea','amino','pre','burn','vit','snack','batido'];
 const CLUB=0.05;
 const ASESORES=[{n:'Diana Correa',t:'Asesora',w:'573216495458',v:'321 649 5458'},{n:'James Escobar',t:'Asesor',w:'573233094783',v:'323 309 4783'}];
@@ -395,7 +399,9 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const fmt=n=>'$'+Math.round(n).toLocaleString('es-CO');
 const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 WA=store.get('selah_asesor','573216495458');let cart=store.get('selah_cart',{}), user=store.get('selah_user',null), seg='all', qtys={};
-const byId=Object.fromEntries(P.map(p=>[p.id,p]));
+const byId0=Object.fromEntries(P.map(p=>[p.id,p]));const byId=new Proxy(byId0,{get:(t,k)=>t[k]||(typeof k==='string'&&k.includes('|')?t[k.split('|')[0]]:undefined)});
+function tl(k){const t=String(k).split('|')[1];return t?' · Talla '+t:''}
+let AGOT=new Set(),OFER={};const isAg=p=>p&&AGOT.has(p.id);
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2200)}
 function warnFor(p){const f=p.fam;let w='Suplemento dietario: no es un medicamento y no reemplaza una alimentación balanceada. Manténgase fuera del alcance de los niños.';
@@ -405,37 +411,37 @@ function warnFor(p){const f=p.fam;let w='Suplemento dietario: no es un medicamen
  return w}
 // chips
 function chips(){const c=$('#chips');const segs=SEGO.filter(s=>P.some(p=>p.seg===s));
- c.innerHTML=`<button class="chip ${seg==='all'?'on':''}" data-s="all">Todo</button>`+segs.map(s=>`<button class="chip ${seg===s?'on':''}" data-s="${s}">${SEG[s]}</button>`).join('');
+ const nOf=P.filter(p=>promoPct(p)&&!isAg(p)).length;c.innerHTML=`<button class="chip ${seg==='all'?'on':''}" data-s="all">Todo</button>`+(nOf?`<button class="chip ${seg==='ofertas'?'on':''}" data-s="ofertas">🔥 Ofertas (${nOf})</button>`:'')+segs.map(s=>`<button class="chip ${seg===s?'on':''}" data-s="${s}">${SEG[s]}</button>`).join('');
  c.onclick=e=>{const b=e.target.closest('.chip');if(!b)return;seg=b.dataset.s;chips();render();window.scrollTo({top:$('#list').offsetTop-150,behavior:'smooth'})}}
 function brands(){const bs=[...new Set(P.map(p=>p.brand))].sort();$('#fbrand').innerHTML='<option value="">Todas las marcas</option>'+bs.map(b=>`<option>${esc(b)}</option>`).join('')}
 function price(p){return ep(p)}
 function firstBuy(){return user&&!store.get('selah_orders',[]).length}
 function card(p){const q=qtys[p.id]||1;const hot=p.demand>=9;
- return `<article class="card"><div class="ph" data-open="${p.id}">${promoPct(p)?`<span class="ptag">−${promoPct(p)}% promo</span>`:''}<span class="tag ${hot?'hot':''}">${hot?'Top ventas':esc(p.brand)}</span><img loading="lazy" src="${p.imgs[0]}" alt="${esc(p.name)}"><img class="b" loading="lazy" src="${p.imgs[1]}" alt=""><span class="zoom">Ver fotos</span></div>
+ return `<article class="card${isAg(p)?' ag':''}"><div class="ph" data-open="${p.id}">${isAg(p)?'<span class="agtag">Agotado</span>':''}${promoPct(p)&&!isAg(p)?`<span class="ptag">−${promoPct(p)}% promo</span>`:''}<span class="tag ${hot?'hot':''}">${hot?'Top ventas':esc(p.brand)}</span><img loading="lazy" src="${p.imgs[0]}" alt="${esc(p.name)}"><img class="b" loading="lazy" src="${p.imgs[1]}" alt=""><span class="zoom">Ver fotos</span></div>
  <div class="cb"><div class="br">${esc(p.brand)}</div><div class="nm" data-open="${p.id}">${esc(p.name)}</div>${p.pres?`<div class="ps">${esc(p.pres)}</div>`:''}<div class="sh">✔ ${esc(SHORT[p.fam])}</div><div class="us">${esc(p.desc||FAM[p.fam].uso)}</div>
  <div class="pr"><b>${fmt(ep(p))}</b>${promoPct(p)?`<span class="old">${fmt(p.price)}</span>`:''}</div><div class="club">${firstBuy()||!user?'−5% en tu 1ª compra Club':'Precio con IVA incluido'}</div>
- <div class="row"><div class="qty"><button data-m="${p.id}">−</button><input data-q="${p.id}" type="number" min="1" value="${q}"><button data-p="${p.id}">+</button></div><button class="add" data-add="${p.id}">Agregar</button></div></div></article>`}
+ ${p.tallas&&p.tallas.length?`<select class="tsel" data-t="${p.id}"><option value="">Elige talla</option>${p.tallas.map(t=>`<option>${esc(t)}</option>`).join('')}</select>`:''}${isAg(p)?'<div class="row"><button class="add" disabled style="opacity:.55;cursor:not-allowed;flex:1">Agotado</button></div>':`<div class="row"><div class="qty"><button data-m="${p.id}">−</button><input data-q="${p.id}" type="number" min="1" value="${q}"><button data-p="${p.id}">+</button></div><button class="add" data-add="${p.id}">Agregar</button></div>`}</div></article>`}
 function render(){const q=$('#q').value.trim().toLowerCase(),b=$('#fbrand').value,so=$('#fsort').value;
- let L=P.filter(p=>(seg==='all'||p.seg===seg)&&(!b||p.brand===b)&&(!q||(p.name+' '+p.brand+' '+SEG[p.seg]+' '+FAM[p.fam].uso).toLowerCase().includes(q)));
+ let L=P.filter(p=>(seg==='all'||(seg==='ofertas'?promoPct(p)&&!isAg(p):p.seg===seg))&&(!b||p.brand===b)&&(!q||(p.name+' '+p.brand+' '+SEG[p.seg]+' '+FAM[p.fam].uso).toLowerCase().includes(q)));
  const sorter={pop:(a,b)=>(promoPct(b)?1:0)-(promoPct(a)?1:0)||(b.star?1:0)-(a.star?1:0)||b.demand-a.demand||a.price-b.price,pa:(a,b)=>a.price-b.price,pd:(a,b)=>b.price-a.price,az:(a,b)=>a.name.localeCompare(b.name)}[so];
  $('#cnt').textContent=L.length+' productos';
  const sp=byId['selah1'];const showF=sp&&seg==='all'&&!b&&!q;
  const feat=showF?`<section class="feat"><div class="fi"><img src="${sp.imgs[0]}" alt="${esc(sp.name)}" data-open="selah1"></div><div class="fb"><div class="kick">★ Marca propia Selah</div><h3>Ashwagandha + Citrato de Magnesio</h3><div class="ps">${esc(sp.pres)} · Gomitas blandas con centro líquido</div><p>${esc(FAM.selah.uso)}</p><p><b style="color:#fff">Modo de uso:</b> ${esc(FAM.selah.poso)}</p><div class="pr"><b>${fmt(ep(sp))}</b>${promoPct(sp)?`<span class="old">${fmt(sp.price)}</span>`:''}<span class="club">−5% en tu 1ª compra Club</span></div><div class="row" style="max-width:380px"><div class="qty"><button data-m="selah1">−</button><input data-q="selah1" type="number" min="1" value="${qtys.selah1||1}"><button data-p="selah1">+</button></div><button class="add" data-add="selah1">Agregar</button></div><button class="btn ghost" data-open="selah1" style="align-self:flex-start">Ver fotos y tabla nutricional</button></div></section>`:'';
- const out=feat+SEGO.filter(s=>L.some(p=>p.seg===s)).map(s=>{const ps=L.filter(p=>p.seg===s).sort(sorter);
+ const out=feat+SEGO.filter(s=>L.some(p=>p.seg===s)).map(s=>{const ps=L.filter(p=>p.seg===s).sort(sorter).sort((a,b)=>(isAg(a)?1:0)-(isAg(b)?1:0));
   return `<section class="seg" id="s-${s}"><h3>${SEG[s]}</h3><p class="sd">${SEGD[s]}</p><div class="grid">${ps.map(card).join('')}</div></section>`}).join('');
  $('#list').innerHTML=out||'<p class="empty">No encontramos productos con ese filtro.</p>'}
 // qty & add (delegation)
 document.addEventListener('click',e=>{const t=e.target;
  const m=t.closest('[data-m]'),pl=t.closest('[data-p]'),ad=t.closest('[data-add]'),op=t.closest('[data-open]');
  if(m||pl){const id=(m||pl).dataset.m||(m||pl).dataset.p;const inp=document.querySelector(`[data-q="${id}"]`)||null;let v=Math.max(1,(parseInt(inp?.value)||1)+(m?-1:1));qtys[id]=v;$$(`[data-q="${id}"]`).forEach(i=>i.value=v);return}
- if(ad){const id=ad.dataset.add;const v=Math.max(1,parseInt(document.querySelector(`[data-q="${id}"]`)?.value)||1);addCart(id,v);ad.classList.add('ok');ad.textContent='✓ Agregado';setTimeout(()=>{ad.classList.remove('ok');ad.textContent=ad.dataset.lbl||'Agregar'},1200);return}
+ if(ad){let id=ad.dataset.add;const pp=byId[id];if(isAg(pp)){toast('Producto agotado');return}if(pp&&pp.tallas&&pp.tallas.length){const ts=ad.closest('.row').parentElement.querySelector('[data-t]');const tv=ts&&ts.value;if(!tv){toast('Elige la talla');ts&&ts.focus();return}id=id+'|'+tv}const v=Math.max(1,parseInt(document.querySelector(`[data-q="${id}"]`)?.value)||1);addCart(id,v);ad.classList.add('ok');ad.textContent='✓ Agregado';setTimeout(()=>{ad.classList.remove('ok');ad.textContent=ad.dataset.lbl||'Agregar'},1200);return}
  if(op){openP(op.dataset.open);return}
  if(t.closest('[data-close]')){t.closest('.ov').classList.remove('on');return}
  if(t.classList.contains('ov')&&t.id!=='dov'){t.classList.remove('on')}
  if(t.closest('[data-pol]')){e.preventDefault();$('#lov').classList.add('on')}
 });
 document.addEventListener('input',e=>{const id=e.target.dataset.q;if(id){const v=Math.max(1,parseInt(e.target.value)||1);qtys[id]=v}});
-function addCart(id,v){cart[id]=(cart[id]||0)+v;store.set('selah_cart',cart);updCount();toast(`${v} × ${byId[id].name} agregado`)}
+function addCart(id,v){cart[id]=(cart[id]||0)+v;store.set('selah_cart',cart);updCount();toast(`${v} × ${byId[id].name}${tl(id)} agregado`)}
 function updCount(){const n=Object.values(cart).reduce((a,b)=>a+b,0);$('#ccount').textContent=n;$('#fabc').textContent=n}
 // product modal
 function openP(id){const p=byId[id];const f=FAM[p.fam];qtys[id]=qtys[id]||1;
@@ -443,7 +449,7 @@ function openP(id){const p=byId[id];const f=FAM[p.fam];qtys[id]=qtys[id]||1;
  $('#pdc').innerHTML=`<div class="gal"><div class="gmain ${p.id.startsWith('sc')?'lo':''}" id="gbox"><img id="gimg" src="${p.imgs[0]}" alt="${esc(p.name)}"></div><div class="gth">${p.imgs.map((s,i)=>`<button class="${i?'':'on'}" data-g="${s}" title="${labels[i]||''}"><img src="${s}" alt=""></button>`).join('')}</div>${p.ilustrativa?'<p class="note">Imagen ilustrativa. El empaque real puede variar.</p>':'<p class="note">Toca las miniaturas para ver cada foto.</p>'}</div>
  <div class="info"><div class="br">${esc(p.brand)} · ${SEG[p.seg]}</div><h4>${esc(p.name)}</h4>${p.pres?`<div class="ps">${esc(p.pres)}</div>`:''}
  <div class="pr" style="margin-top:10px"><b>${fmt(ep(p))}</b>${promoPct(p)?`<span class="old">${fmt(p.price)}</span>`:''}<span class="club">${firstBuy()||!user?'−5% en tu primera compra Club Selah':'IVA incluido'}</span></div>
- <div class="row" style="max-width:360px"><div class="qty"><button data-m="${id}">−</button><input data-q="${id}" type="number" min="1" value="${qtys[id]}"><button data-p="${id}">+</button></div><button class="add" data-add="${id}">Agregar al carrito</button></div>
+ ${p.tallas&&p.tallas.length?`<select class="tsel" data-t="${id}" style="max-width:360px"><option value="">Elige talla</option>${p.tallas.map(t=>`<option>${esc(t)}</option>`).join('')}</select>`:''}${isAg(p)?'<div class="row" style="max-width:360px"><button class="add" disabled style="opacity:.55;flex:1">Agotado – pronto vuelve</button></div>':`<div class="row" style="max-width:360px"><div class="qty"><button data-m="${id}">−</button><input data-q="${id}" type="number" min="1" value="${qtys[id]}"><button data-p="${id}">+</button></div><button class="add" data-add="${id}">Agregar al carrito</button></div>`}
  ${p.desc?`<h5>Descripción</h5><p>${esc(p.desc)}</p>`:''}<h5>¿Para qué sirve?</h5><p><b style="color:#fff">${esc(SHORT[p.fam])}.</b> ${esc(f.uso)}</p>
  <h5>Posología / modo de uso</h5><p>${esc(f.poso)}</p>
  <h5>Información nutricional</h5>
@@ -460,7 +466,7 @@ $('#cbtn').onclick=openCart;$('#fab').onclick=openCart;$('#dclose').onclick=clos
 function totals(){let sub=0;for(const[id,q]of Object.entries(cart)){if(byId[id])sub+=ep(byId[id])*q}const d=firstBuy()?Math.round(sub*CLUB/100)*100:0;return{sub,d,tot:sub-d}}
 function renderCart(){const ids=Object.keys(cart).filter(id=>byId[id]);
  if(!ids.length){$('#cbody').innerHTML='<p class="empty">Tu carrito está vacío.<br><br>Agrega productos del catálogo 💪</p>';$('#cfoot').innerHTML='';return}
- $('#cbody').innerHTML=ids.map(id=>{const p=byId[id];return `<div class="ci"><img src="${p.imgs[0]}" alt=""><div><div class="n">${esc(p.name)}</div><div class="p">${fmt(ep(p))} c/u${promoPct(p)?' · promo −'+promoPct(p)+'%':''}</div><button class="rm" data-rm="${id}">Quitar</button></div><div class="qty"><button data-cm="${id}">−</button><input data-cq="${id}" type="number" min="1" value="${cart[id]}"><button data-cp="${id}">+</button></div></div>`}).join('');
+ $('#cbody').innerHTML=ids.map(id=>{const p=byId[id];return `<div class="ci"><img src="${p.imgs[0]}" alt=""><div><div class="n">${esc(p.name)}${esc(tl(id))}</div><div class="p">${fmt(ep(p))} c/u${promoPct(p)?' · promo −'+promoPct(p)+'%':''}</div><button class="rm" data-rm="${id}">Quitar</button></div><div class="qty"><button data-cm="${id}">−</button><input data-cq="${id}" type="number" min="1" value="${cart[id]}"><button data-cp="${id}">+</button></div></div>`}).join('');
  const t=totals();
  $('#cfoot').innerHTML=`<div class="tl"><span>Subtotal</span><span>${fmt(t.sub)}</span></div>${t.d?`<div class="tl dsc"><span>Bienvenida Club Selah (5%)</span><span>−${fmt(t.d)}</span></div>`:(!user?`<div class="tl dsc"><span>Regístrate: 5% en tu 1ª compra</span><span>−${fmt(Math.round(t.sub*CLUB/100)*100)}</span></div>`:'')}<div class="tl big"><span>Total</span><span>${fmt(t.tot)}</span></div><div class="tl" style="font-size:12px"><span>El envío se confirma por WhatsApp según tu ciudad.</span></div>
  ${user?`<button class="btn block" id="gocheck">Finalizar compra</button>`:`<button class="btn block" id="needreg">Regístrate y finaliza tu compra</button>`}<button class="btn ghost block" id="clr">Vaciar carrito</button>`;
@@ -472,21 +478,21 @@ $('#cbody').addEventListener('click',e=>{const t=e.target;const a=t.dataset;
  store.set('selah_cart',cart);updCount();renderCart()});
 $('#cbody').addEventListener('change',e=>{const id=e.target.dataset.cq;if(!id)return;cart[id]=Math.max(1,parseInt(e.target.value)||1);store.set('selah_cart',cart);updCount();renderCart()});
 function waOrder(){const t=totals();const ase=ASESORES.find(x=>x.w===WA)||ASESORES[0];let m=`*NUEVO PEDIDO – SELAH SUPLEMENTOS*\nAsesor(a): ${ase.n}\nCliente: ${user.nombre}\nDoc: ${user.doc}\nCel: ${user.cel}\nCiudad: ${user.ciudad}\nCódigo Club: ${user.code}\n\n`;
- for(const[id,q]of Object.entries(cart)){const p=byId[id];if(p)m+=`• ${q} × ${p.name} (${p.brand}) – ${fmt(ep(p)*q)}${promoPct(p)?' (promo −'+promoPct(p)+'%)':''}\n`}
+ for(const[id,q]of Object.entries(cart)){const p=byId[id];if(p)m+=`• ${q} × ${p.name}${tl(id)} (${p.brand}) – ${fmt(ep(p)*q)}${promoPct(p)?' (promo −'+promoPct(p)+'%)':''}\n`}
  m+=`\nSubtotal: ${fmt(t.sub)}\n${t.d?`Bienvenida Club 5% (1ª compra): −${fmt(t.d)}\n`:''}*TOTAL A PAGAR: ${fmt(t.tot)}*\n(Valor del envío por confirmar según ciudad)\n\n*MEDIOS DE PAGO*\n• Nequi / Llave: 321 649 5458\n• Bancolombia Cuenta de Ahorros: 912 665 253 41\n\n📎 Adjunto el *soporte de pago* para confirmar mi pedido y programar el envío.\nDirección de entrega: ${user.dir||'(por confirmar)'}\n\n${regMsg(user).split('\n')[1]}`;
  return 'https://wa.me/'+WA+'?text='+encodeURIComponent(m)}
 // checkout
 const PAYS=`<div class="pay"><div class="pm"><div class="lg2 nq">NEQUI</div><div><b>Nequi / Llave</b><span class="num">321 649 5458</span></div><button data-copy="3216495458">Copiar</button></div><div class="pm"><div class="lg2 bc">BANCO</div><div><b>Bancolombia · Cuenta de Ahorros</b><span class="num">912 665 253 41</span></div><button data-copy="91266525341">Copiar</button></div></div>`;
 function openCheckout(){closeCart();const t=totals();const ids=Object.keys(cart).filter(id=>byId[id]);if(!ids.length){toast('Tu carrito está vacío');return}
  $('#kc').innerHTML=`<div class="lg"><img src="img/b/mark.png" alt=""><div><h4>Finaliza tu pedido</h4></div></div>
- <div class="sum">${ids.map(id=>`<div><span>${cart[id]} × ${esc(byId[id].name)}</span><b>${fmt(ep(byId[id])*cart[id])}</b></div>`).join('')}${t.d?`<div style="color:var(--aq)"><span>Bienvenida Club (5%)</span><b>−${fmt(t.d)}</b></div>`:''}<div style="border-top:1px solid var(--ln);margin-top:6px;padding-top:8px;font-size:16px"><span><b>Total a pagar</b></span><b>${fmt(t.tot)}</b></div></div>
+ <div class="sum">${ids.map(id=>`<div><span>${cart[id]} × ${esc(byId[id].name)}${esc(tl(id))}</span><b>${fmt(ep(byId[id])*cart[id])}</b></div>`).join('')}${t.d?`<div style="color:var(--aq)"><span>Bienvenida Club (5%)</span><b>−${fmt(t.d)}</b></div>`:''}<div style="border-top:1px solid var(--ln);margin-top:6px;padding-top:8px;font-size:16px"><span><b>Total a pagar</b></span><b>${fmt(t.tot)}</b></div></div>
  <h5 style="color:var(--aq);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:16px 0 4px">¿Con quién finalizas tu pedido?</h5><div class="wa-sel" id="ckAs">${ASESORES.map(a=>`<button data-ck="${a.w}" class="${a.w===WA?'on':''}">${a.n}<br><small style="color:var(--mu);font-weight:600">${a.v}</small></button>`).join('')}</div><h5 style="color:var(--aq);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:16px 0 4px">Medios de pago</h5>${PAYS}
  <div class="steps"><div><span>Toca el botón y envía tu pedido al WhatsApp de tu asesor(a).</span></div><div><span>Paga el total por Nequi / llave o transferencia a Bancolombia.</span></div><div><span>Envía el <b>soporte de pago</b> por el mismo chat para confirmar y programar tu envío.</span></div></div>
  <a class="btn block" id="wabtn" target="_blank" rel="noopener" href="${waOrder()}">Enviar pedido por WhatsApp</a>
  <p class="note" style="color:var(--mu);font-size:12px;margin-top:10px">El valor del envío se confirma por WhatsApp según tu ciudad. Tu pedido se despacha una vez verificado el pago.</p>`;
  $('#kov').classList.add('on');
  $('#ckAs').onclick=e=>{const b=e.target.closest('[data-ck]');if(!b)return;WA=b.dataset.ck;store.set('selah_asesor',WA);$$('#ckAs [data-ck]').forEach(x=>x.classList.toggle('on',x===b));$('#wabtn').href=waOrder();if(window.renderWa)renderWa()};
- $('#wabtn').onclick=()=>{const t0=totals(),ids0=Object.keys(cart).filter(id=>byId[id]);toSheet({tipo:'pedido',code:user.code,nombre:user.nombre,cel:user.cel,ciudad:user.ciudad,dir:user.dir||'',productos:ids0.map(id=>cart[id]+' x '+byId[id].name).join(' | '),unidades:ids0.reduce((a,id)=>a+cart[id],0),subtotal:t0.sub,descuento:t0.d,total:t0.tot});const o=store.get('selah_orders',[]);o.push({f:new Date().toISOString(),cart:{...cart},tot:totals().tot});store.set('selah_orders',o);setTimeout(()=>{cart={};store.set('selah_cart',cart);updCount();$('#kov').classList.remove('on');toast('¡Pedido enviado! Recuerda enviar el soporte de pago')},900)}}
+ $('#wabtn').onclick=()=>{const t0=totals(),ids0=Object.keys(cart).filter(id=>byId[id]);toSheet({tipo:'pedido',code:user.code,nombre:user.nombre,cel:user.cel,ciudad:user.ciudad,dir:user.dir||'',productos:ids0.map(id=>cart[id]+' x '+byId[id].name+tl(id)).join(' | '),unidades:ids0.reduce((a,id)=>a+cart[id],0),subtotal:t0.sub,descuento:t0.d,total:t0.tot});const o=store.get('selah_orders',[]);o.push({f:new Date().toISOString(),cart:{...cart},tot:totals().tot});store.set('selah_orders',o);setTimeout(()=>{cart={};store.set('selah_cart',cart);updCount();$('#kov').classList.remove('on');toast('¡Pedido enviado! Recuerda enviar el soporte de pago')},900)}}
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-copy]');if(!b)return;try{await navigator.clipboard.writeText(b.dataset.copy);toast('Número copiado')}catch(_){toast(b.dataset.copy)}});
 // registration
 function openReg(msg){closeCart();$('#rsub').textContent=msg||'Para comprar debes registrarte. Es gratis y te da beneficios:';$('#rerr').textContent='';$('#rov').classList.add('on')}
@@ -528,10 +534,10 @@ const ICO={ig:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
 function socUrl(k,v){v=String(v||'').trim();if(!v)return '';if(/^https?:/.test(v))return v;v=v.replace(/^@/,'');return {ig:'https://instagram.com/',fb:'https://facebook.com/',tt:'https://www.tiktok.com/@'}[k]+v}
 function socHtml(){return ['ig','fb','tt'].filter(k=>SOC[k]).map(k=>`<a href="${esc(socUrl(k,SOC[k]))}" target="_blank" rel="noopener">${ICO[k]}${{ig:'Instagram',fb:'Facebook',tt:'TikTok'}[k]}</a>`).join('')}
 function promoOn(){if(!PROMO||!PROMO.on)return false;if(PROMO.hasta){const h=new Date(PROMO.hasta+'T23:59:59');if(h<new Date())return false}return true}
-function promoPct(p){return promoOn()&&p&&PROMO.id===p.id?Math.max(0,Math.min(90,+PROMO.desc||0)):0}
+function promoPct(p){if(!p)return 0;const a=promoOn()&&PROMO.id===p.id?+PROMO.desc||0:0;const b=+OFER[p.id]||0;return Math.max(0,Math.min(90,Math.max(a,b)))}
 function ep(p){const d=promoPct(p);return d?Math.round(p.price*(1-d/100)/100)*100:p.price}
 function paintSoc(){$('#ftSoc').innerHTML=socHtml()||'<span>Pronto en redes</span>';$('#ftDom').textContent=SOC.dom||SOC_DEF.dom;$('#strip span').textContent='🛵 '+(SOC.dom||SOC_DEF.dom)}
-function openPromo(){if(!promoOn())return;const p=byId[PROMO.id];const d=promoPct(p);const img=PROMO.img||(p?p.imgs[0]:'img/b/hero.webp');
+function openPromo(){if(!promoOn())return;const p=byId[PROMO.id];if(isAg(p))return;const d=promoPct(p);const img=PROMO.img||(p?p.imgs[0]:'img/b/hero.webp');
  const hasta=PROMO.hasta?new Date(PROMO.hasta+'T12:00:00').toLocaleDateString('es-CO',{day:'numeric',month:'long'}):'';
  $('#pmc').innerHTML=`<div class="ph2"><img src="${esc(img)}" alt="">${d?`<span class="badge2">−${d}%</span>`:''}</div>
  <span class="kick2">🔥 Promo de la semana</span><h3>${esc(PROMO.titulo||'¿Ya viste nuestra promo de la semana?')}</h3>${p?`<p class="pn">${esc(p.name)}${p.pres?' · '+esc(p.pres):''}</p><div class="pp">${d?`<s>${fmt(p.price)}</s>`:''}${fmt(ep(p))}</div>`:''}
@@ -539,9 +545,9 @@ function openPromo(){if(!promoOn())return;const p=byId[PROMO.id];const d=promoPc
  <div class="acts">${p?'<button class="go" id="pmGo">¡La quiero! 🛒</button>':''}<button class="no" data-close>Cerrar y continuar</button></div>
  <div class="dom">🛵 ${esc(SOC.dom||SOC_DEF.dom)}</div>
  ${socHtml()?`<div class="soc"><b style="color:var(--tx)">Síguenos:</b>${socHtml()}</div>`:''}`;
- $('#mov2').classList.add('on');const g=$('#pmGo');if(g)g.onclick=()=>{$('#mov2').classList.remove('on');addCart(p.id,1);openCart()}}
+ $('#mov2').classList.add('on');const g=$('#pmGo');if(g)g.onclick=()=>{$('#mov2').classList.remove('on');if(p.tallas&&p.tallas.length){openP(p.id)}else{addCart(p.id,1);openCart()}}}
 function loadPromo(){paintSoc();if(!SHEET_URL||SHEET_URL.indexOf('http')!==0)return;
- fetch(SHEET_URL+'?accion=promo').then(r=>r.json()).then(j=>{const pr=j&&j.promo;if(!pr)return;PROMO=pr;SOC={...SOC_DEF,...Object.fromEntries(['ig','fb','tt','dom'].filter(k=>pr[k]!==undefined&&pr[k]!=='').map(k=>[k,pr[k]]))};
+ fetch(SHEET_URL+'?accion=promo').then(r=>r.json()).then(j=>{const pr=j&&j.promo;if(!pr)return;PROMO=pr;AGOT=new Set(pr.agotados||[]);OFER=pr.ofertas||{};chips();SOC={...SOC_DEF,...Object.fromEntries(['ig','fb','tt','dom'].filter(k=>pr[k]!==undefined&&pr[k]!=='').map(k=>[k,pr[k]]))};
   paintSoc();render();updCount();
   if(promoOn()){$('#stripP').style.display='';$('#stripP').onclick=openPromo;const sig=(pr.actualizado||'')+pr.id;let seen='';try{seen=sessionStorage.getItem('selah_promo')||''}catch(e){}
    setTimeout(openPromo,900);}}).catch(()=>{})}
