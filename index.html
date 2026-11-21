@@ -551,6 +551,7 @@ function openPromo(){if(!promoOn())return;const p=byId[PROMO.id];if(isAg(p))retu
  ${socHtml()?`<div class="soc"><b style="color:var(--tx)">Síguenos:</b>${socHtml()}</div>`:''}`;
  $('#mov2').classList.add('on');const g=$('#pmGo');if(g)g.onclick=()=>{$('#mov2').classList.remove('on');if(p.opts&&p.opts.length){openP(p.id)}else{addCart(p.id,1);openCart()}}}
 function loadPromo(){paintSoc();if(!SHEET_URL||SHEET_URL.indexOf('http')!==0)return;
+ fetch(SHEET_URL+'?accion=fotos').then(r=>r.json()).then(j=>{const F=j&&j.fotos||{};let n=0;Object.entries(F).forEach(([k,v])=>{const p=byId0[k];if(p&&v){p.imgs=[v].concat(p.imgs.filter(x=>x!==v)).slice(0,3);n++}});if(n)render()}).catch(()=>{});
  fetch(SHEET_URL+'?accion=promo').then(r=>r.json()).then(j=>{const pr=j&&j.promo;if(!pr)return;PROMO=pr;AGOT=new Set(pr.agotados||[]);OFER=pr.ofertas||{};Object.entries(pr.precios||{}).forEach(([k,v])=>{if(byId0[k]&&+v>0)byId0[k].price=+v});Object.entries(pr.fotos||{}).forEach(([k,v])=>{const p=byId0[k];if(p&&Array.isArray(v)&&v.length)p.imgs=v.filter(Boolean).concat(p.imgs).slice(0,Math.max(2,v.length))});chips();SOC={...SOC_DEF,...Object.fromEntries(['ig','fb','tt','dom'].filter(k=>pr[k]!==undefined&&pr[k]!=='').map(k=>[k,pr[k]]))};
   paintSoc();render();updCount();
   if(promoOn()){$('#stripP').style.display='';$('#stripP').onclick=openPromo;const sig=(pr.actualizado||'')+pr.id;let seen='';try{seen=sessionStorage.getItem('selah_promo')||''}catch(e){}
