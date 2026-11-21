@@ -251,7 +251,10 @@ footer{border-top:1px solid var(--ln);margin-top:50px;padding:36px 0 110px;color
 
 .strip{background:linear-gradient(90deg,#0f3d39,#2cc5b6 50%,#0f3d39);color:#04110f;font-weight:800;font-size:12.5px;text-align:center;padding:7px 12px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;align-items:center}
 .strip button{background:#04110f;color:#2cc5b6;border-radius:999px;padding:3px 10px;font-weight:800;font-size:12px}
-.pm{width:min(460px,100%);text-align:center;padding:0 0 18px;overflow:hidden}
+.pm{width:min(460px,100%);text-align:center;padding:0 0 18px;overflow:auto;max-height:94vh}
+#pmc.two .ph2{aspect-ratio:auto;height:150px}#pmc.two .ph2 img{max-height:136px}#pmc.two h3{font-size:19px}#pmc.two .pp{font-size:24px;margin:6px 0 0}#pmc.two .kick2{margin-top:12px}
+#mov2{align-items:flex-start;overflow-y:auto}#mov2 .md.pm{max-height:none!important;overflow:visible!important;margin:auto 0}
+#pmc .pmk.dia h3{color:#ffc861}
 .pm .ph2{position:relative;background:#fff;aspect-ratio:1.25;display:grid;place-items:center}
 .pm .ph2 img{max-width:78%;max-height:88%;object-fit:contain}
 .pm .badge2{position:absolute;left:14px;top:14px;background:#ff4d4d;color:#fff;font-weight:900;font-size:24px;border-radius:14px;padding:8px 12px;transform:rotate(-6deg);box-shadow:0 8px 20px rgba(0,0,0,.25)}
@@ -275,7 +278,7 @@ footer{border-top:1px solid var(--ln);margin-top:50px;padding:36px 0 110px;color
 </style>
 </head>
 <body>
-<div class="strip" id="strip"><span>🛵 Servicio a domicilio en el área metropolitana</span><button id="stripP" style="display:none">🔥 Promo de la semana</button></div>
+<div class="strip" id="strip"><span>🛵 Servicio a domicilio en el área metropolitana</span><button id="stripD" style="display:none;background:#ffc861;color:#1a1200">⚡ Promo del día</button><button id="stripP" style="display:none">🔥 Campaña de la semana</button></div>
 <header>
  <div class="wrap hd">
   <a class="brand" href="#top"><img src="img/b/mark.png" alt="Selah"><div><b>SELAH</b><small>SUPLEMENTOS</small></div></a>
@@ -531,32 +534,33 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){$$('.ov.on').forEac
  $('#waAs').addEventListener('click',e=>{const b=e.target.closest('[data-as]');if(!b)return;WA=b.dataset.as;store.set('selah_asesor',WA);renderWa()});renderWa();
  setTimeout(()=>{tip.style.display='none'},12000)})();
 
-// ===== Promo de la semana + redes =====
+// ===== Promo del día + campaña de la semana + redes =====
 const SOC_DEF={ig:'suplementosselah',fb:'suplementosselah',tt:'selahsuplementos',dom:'Servicio a domicilio en el área metropolitana'};
 let PROMO=null, SOC={...SOC_DEF};
 const ICO={ig:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>',fb:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v7h4v-7H17l.5-4h-4V8.8c0-.5.3-.8.5-.8z"/></svg>',tt:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c.4 2.2 1.8 3.7 4 4v3.3c-1.5 0-2.8-.4-4-1.2v6.4A5.5 5.5 0 1 1 11 10v3.4a2.2 2.2 0 1 0 2.2 2.1V3h3.3z"/></svg>'};
 function socUrl(k,v){v=String(v||'').trim();if(!v)return '';if(/^https?:/.test(v))return v;v=v.replace(/^@/,'');return {ig:'https://instagram.com/',fb:'https://facebook.com/',tt:'https://www.tiktok.com/@'}[k]+v}
 function socHtml(){return ['ig','fb','tt'].filter(k=>SOC[k]).map(k=>`<a href="${esc(socUrl(k,SOC[k]))}" target="_blank" rel="noopener">${ICO[k]}${{ig:'Instagram',fb:'Facebook',tt:'TikTok'}[k]}</a>`).join('')}
 function promoOn(){if(!PROMO||!PROMO.on)return false;if(PROMO.hasta){const h=new Date(PROMO.hasta+'T23:59:59');if(h<new Date())return false}return true}
-function promoPct(p){if(!p)return 0;const a=promoOn()&&PROMO.id===p.id?+PROMO.desc||0:0;const b=+OFER[p.id]||0;return Math.max(0,Math.min(90,Math.max(a,b)))}
+const hoyCo=()=>new Date(Date.now()-5*3600e3).toISOString().slice(0,10);
+function diaOn(){const d=PROMO&&PROMO.dia;return !!(d&&d.on&&d.id&&(!d.fecha||d.fecha===hoyCo()))}
+function promoPct(p){if(!p)return 0;const a=Math.max(promoOn()&&PROMO.id===p.id?+PROMO.desc||0:0,diaOn()&&PROMO.dia.id===p.id?+PROMO.dia.desc||0:0);const b=+OFER[p.id]||0;return Math.max(0,Math.min(90,Math.max(a,b)))}
 function ep(p){const d=promoPct(p);return d?Math.round(p.price*(1-d/100)/100)*100:p.price}
 function paintSoc(){$('#ftSoc').innerHTML=socHtml()||'<span>Pronto en redes</span>';$('#ftDom').textContent=SOC.dom||SOC_DEF.dom;$('#strip span').textContent='🛵 '+(SOC.dom||SOC_DEF.dom)}
-function openPromo(){if(!promoOn())return;const p=byId[PROMO.id];if(isAg(p))return;const d=promoPct(p);const img=PROMO.img||(p?p.imgs[0]:'img/b/hero.webp');
- const hasta=PROMO.hasta?new Date(PROMO.hasta+'T12:00:00').toLocaleDateString('es-CO',{day:'numeric',month:'long'}):'';
- $('#pmc').innerHTML=`<div class="ph2"><img src="${esc(img)}" alt="">${d?`<span class="badge2">−${d}%</span>`:''}</div>
- <span class="kick2">🔥 Promo de la semana</span><h3>${esc(PROMO.titulo||'¿Ya viste nuestra promo de la semana?')}</h3>${p?`<p class="pn">${esc(p.name)}${p.pres?' · '+esc(p.pres):''}</p><div class="pp">${d?`<s>${fmt(p.price)}</s>`:''}${fmt(ep(p))}</div>`:''}
- ${PROMO.texto?`<p class="tx">${esc(PROMO.texto)}</p>`:''}${hasta?`<div class="hs">Válida hasta el ${hasta} o hasta agotar existencias</div>`:''}
- <div class="acts">${p?'<button class="go" id="pmGo">¡La quiero! 🛒</button>':''}<button class="no" data-close>Cerrar y continuar</button></div>
- <div class="dom">🛵 ${esc(SOC.dom||SOC_DEF.dom)}</div>
- ${socHtml()?`<div class="soc"><b style="color:var(--tx)">Síguenos:</b>${socHtml()}</div>`:''}`;
- $('#mov2').classList.add('on');const g=$('#pmGo');if(g)g.onclick=()=>{$('#mov2').classList.remove('on');if(p.opts&&p.opts.length){openP(p.id)}else{addCart(p.id,1);openCart()}}}
+function pmCard(o,kind){const p=byId[o.id];if(!p||isAg(p))return '';const d=promoPct(p);const img=o.img||p.imgs[0]||'img/b/hero.webp';
+ let hs='';if(kind==='dia'){const now=new Date(Date.now()-5*3600e3);const h=23-now.getUTCHours(),m=59-now.getUTCMinutes();hs=`⏰ Termina hoy a medianoche · quedan ${h} h ${m} min`}else if(o.hasta){hs='Válida hasta el '+new Date(o.hasta+'T12:00:00').toLocaleDateString('es-CO',{day:'numeric',month:'long'})+' o hasta agotar existencias'}
+ return `<div class="pmk ${kind}"><div class="ph2"><img src="${esc(img)}" alt="">${d?`<span class="badge2" ${kind==='dia'?'style="background:#ffc861;color:#1a1200"':''}>−${d}%</span>`:''}</div>
+ <span class="kick2" ${kind==='dia'?'style="color:#ffc861;border-color:#ffc861"':''}>${kind==='dia'?'⚡ Promo del día · solo hoy':'🔥 Campaña de la semana'}</span><h3>${esc(o.titulo||(kind==='dia'?'¡Promo del día!':'Campaña de la semana'))}</h3><p class="pn">${esc(p.name)}${p.pres?' · '+esc(p.pres):''}</p><div class="pp">${d?`<s>${fmt(p.price)}</s>`:''}${fmt(ep(p))}</div>
+ ${o.texto?`<p class="tx">${esc(o.texto)}</p>`:''}${hs?`<div class="hs">${hs}</div>`:''}<div class="acts"><button class="go" data-pmgo="${p.id}">¡La quiero! 🛒</button></div></div>`}
+function openPromo(which){const D=diaOn()?pmCard(PROMO.dia,'dia'):'',W=promoOn()?pmCard(PROMO,'sem'):'';let body=which==='dia'?D:which==='sem'?W:D+(D&&W?'<div style="height:1px;background:var(--ln);margin:18px 0"></div>':'')+W;if(!body)return;
+ $('#pmc').innerHTML=body+`<div class="acts"><button class="no" data-close>Cerrar y continuar</button></div><div class="dom">🛵 ${esc(SOC.dom||SOC_DEF.dom)}</div>${socHtml()?`<div class="soc"><b style="color:var(--tx)">Síguenos:</b>${socHtml()}</div>`:''}`;
+ $('#pmc').classList.toggle('two',!which&&!!(D&&W));$('#mov2').classList.add('on');setTimeout(()=>{const m=$('#mov2 .md');if(m)m.scrollTop=0},30);$('#pmc').querySelectorAll('[data-pmgo]').forEach(g=>g.onclick=()=>{const p=byId[g.dataset.pmgo];$('#mov2').classList.remove('on');if(p.opts&&p.opts.length){openP(p.id)}else{addCart(p.id,1);openCart()}})}
 function addCombos(L){L.forEach(cb=>{if(!cb||!cb.id||byId0[cb.id])return;const its=(cb.it||[]).map(([id,q])=>[byId0[id],q]).filter(x=>x[0]);if(its.length<1)return;const antes=its.reduce((a,[p,q])=>a+p.price*q,0);const p={id:cb.id,name:cb.n,brand:'Combo Selah',pres:'Incluye: '+its.map(([p,q])=>q+' × '+p.name).join(' + '),price:+cb.pr,antes,imgs:its.map(([p])=>p.imgs[0]).filter(Boolean),seg:'combo',fam:'combo',demand:9,desc:cb.tx||'',combo:its.map(([p,q])=>({n:p.name,b:p.brand,q,img:p.imgs[0]}))};byId0[p.id]=p;P.push(p)})}
 function loadPromo(){paintSoc();if(!SHEET_URL||SHEET_URL.indexOf('http')!==0)return;
  fetch(SHEET_URL+'?accion=fotos').then(r=>r.json()).then(j=>{const F=j&&j.fotos||{};let n=0;Object.entries(F).forEach(([k,v])=>{const p=byId0[k];if(p&&v){p.imgs=[v].concat(p.imgs.filter(x=>x!==v)).slice(0,3);n++}});if(n)render()}).catch(()=>{});
  fetch(SHEET_URL+'?accion=promo').then(r=>r.json()).then(j=>{const pr=j&&j.promo;if(!pr)return;PROMO=pr;addCombos(pr.combos||[]);AGOT=new Set(pr.agotados||[]);OFER=pr.ofertas||{};Object.entries(pr.precios||{}).forEach(([k,v])=>{if(byId0[k]&&+v>0)byId0[k].price=+v});Object.entries(pr.fotos||{}).forEach(([k,v])=>{const p=byId0[k];if(p&&Array.isArray(v)&&v.length)p.imgs=v.filter(Boolean).concat(p.imgs).slice(0,Math.max(2,v.length))});chips();SOC={...SOC_DEF,...Object.fromEntries(['ig','fb','tt','dom'].filter(k=>pr[k]!==undefined&&pr[k]!=='').map(k=>[k,pr[k]]))};
   paintSoc();render();updCount();
-  if(promoOn()){$('#stripP').style.display='';$('#stripP').onclick=openPromo;const sig=(pr.actualizado||'')+pr.id;let seen='';try{seen=sessionStorage.getItem('selah_promo')||''}catch(e){}
-   setTimeout(openPromo,900);}}).catch(()=>{})}
+  const dOk=diaOn()&&!isAg(byId[PROMO.dia.id]),wOk=promoOn()&&!isAg(byId[PROMO.id]);if(dOk){$('#stripD').style.display='';$('#stripD').onclick=()=>openPromo('dia')}if(wOk){$('#stripP').style.display='';$('#stripP').onclick=()=>openPromo('sem')}
+   if(dOk||wOk)setTimeout(()=>openPromo(),900);}).catch(()=>{})}
 
 chips();brands();updUser();updCount();render();loadPromo();
 </script>
